@@ -1,4 +1,4 @@
-package com.rrmvies.bff.rrmovies_bff
+package com.rrmvies.bff.rrmoviesbff
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
