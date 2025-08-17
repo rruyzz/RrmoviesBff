@@ -1,5 +1,6 @@
 package com.rrmvies.bff.rrmoviesbff.client
 
+import com.rrmvies.bff.rrmoviesbff.client.model.DetailResponse
 import com.rrmvies.bff.rrmoviesbff.client.model.PopularMoviesResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -28,6 +29,12 @@ class TmdbClient(
     fun fetchTopRatedMovies(): PopularMoviesResponse? {
         val url = "$baseUrl/movie/top_rated?api_key=$apiKey"
         val response = restTemplate.getForObject(url, PopularMoviesResponse::class.java)
+        return response
+    }
+
+    fun fetchMoviesDetails(movieId: String): DetailResponse? {
+        val url = "$baseUrl/movie/${movieId}?api_key=$apiKey"
+        val response = restTemplate.getForObject(url, DetailResponse::class.java)
         return response
     }
 }

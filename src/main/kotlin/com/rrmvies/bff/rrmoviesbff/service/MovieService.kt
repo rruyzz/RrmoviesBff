@@ -1,11 +1,12 @@
 package com.rrmvies.bff.rrmoviesbff.service
 
 import com.rrmvies.bff.rrmoviesbff.client.TmdbClient
+import com.rrmvies.bff.rrmoviesbff.client.model.DetailResponse
 import com.rrmvies.bff.rrmoviesbff.client.model.PopularMoviesResponse
+import com.rrmvies.bff.rrmoviesbff.dto.MovieDetailDto
 import com.rrmvies.bff.rrmoviesbff.dto.MovieDto
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestTemplate
 
 @Service
 class MovieService(
@@ -26,6 +27,25 @@ class MovieService(
     fun findTopRatedMovies(): List<MovieDto> {
         val externalMovies = tmdbClient.fetchTopRatedMovies()
         return mapToMovieDto(externalMovies)
+    }
+
+    fun findMoviesDetails(movieId: String) : MovieDetailDto? {
+        val externalMovie = tmdbClient.fetchMoviesDetails(movieId)
+        return externalMovie?.mapToDetailDto()
+    }
+
+    private fun DetailResponse.mapToDetailDto(): MovieDetailDto {
+        return MovieDetailDto(
+            isSaved = false,
+            title = this.title.orEmpty(),
+            backgroundPoster = this.backdrop_path?.let { "$imageBaseUrl$it" } ?: "",
+            poster = this.poster_path?.let { "$imageBaseUrl$it" } ?: "",
+            grade = this.vote_average.toString(),
+            year = this.release_date.orEmpty(),
+            minute = this.runtime.toString(),
+            gender = this.genres?.firstOrNull().toString(),
+            description = this.overview.orEmpty()
+        )
     }
 
 
