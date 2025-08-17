@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.RestController
 class MovieController(private val movieService: MovieService) {
 
     @GetMapping("/popular")
-    fun getPopularMovies(): ResponseEntity<List<MovieDto>> {
+    suspend fun getPopularMovies(): ResponseEntity<List<MovieDto>> {
         return ResponseEntity.ok(movieService.findPopularMovies())
     }
 
 
     @GetMapping("/now-playing")
-    fun getNowPlayingMovies(): ResponseEntity<List<MovieDto>> {
+    suspend fun getNowPlayingMovies(): ResponseEntity<List<MovieDto>> {
         return ResponseEntity.ok(movieService.findNowPlayingMovies())
     }
 
 
     @GetMapping("/top-rated")
-    fun getTopRatedMovies(): ResponseEntity<List<MovieDto>> {
+    suspend fun getTopRatedMovies(): ResponseEntity<List<MovieDto>> {
         return ResponseEntity.ok(movieService.findTopRatedMovies())
     }
 
     @GetMapping("/{movieId}")
-    fun getMoviesDetails(@PathVariable movieId: String): ResponseEntity<MovieDetailDto> {
+    suspend fun getMoviesDetails(@PathVariable movieId: String): ResponseEntity<MovieDetailDto> {
         return ResponseEntity.ok(movieService.findMoviesDetails(movieId))
     }
 }

@@ -14,22 +14,22 @@ class MovieService(
     @Value("\${tmdb.api.image-base-url}") private val imageBaseUrl: String
 ) {
 
-    fun findPopularMovies(): List<MovieDto> {
+    suspend fun findPopularMovies(): List<MovieDto> {
         val externalMovies = tmdbClient.fetchPopularMovies()
         return mapToMovieDto(externalMovies)
     }
 
-    fun findNowPlayingMovies(): List<MovieDto> {
+    suspend fun findNowPlayingMovies(): List<MovieDto> {
         val externalMovies = tmdbClient.fetchNowPlayingMovies()
         return mapToMovieDto(externalMovies)
     }
 
-    fun findTopRatedMovies(): List<MovieDto> {
+    suspend fun findTopRatedMovies(): List<MovieDto> {
         val externalMovies = tmdbClient.fetchTopRatedMovies()
         return mapToMovieDto(externalMovies)
     }
 
-    fun findMoviesDetails(movieId: String) : MovieDetailDto? {
+    suspend fun findMoviesDetails(movieId: String) : MovieDetailDto? {
         val externalMovie = tmdbClient.fetchMoviesDetails(movieId)
         return externalMovie?.mapToDetailDto()
     }
@@ -54,7 +54,6 @@ class MovieService(
             MovieDto(
                 id = it.id?.toLong() ?: 0L,
                 title = it.title.toString(),
-                // A lógica de negócio de montar a URL completa fica aqui!
                 backdropPath = it.backdrop_path?.let { "$imageBaseUrl$it" } ?: "",
                 posterPath = it.poster_path?.let { "$imageBaseUrl$it" }
             )

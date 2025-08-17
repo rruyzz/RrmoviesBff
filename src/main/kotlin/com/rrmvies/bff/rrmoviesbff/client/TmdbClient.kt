@@ -5,36 +5,47 @@ import com.rrmvies.bff.rrmoviesbff.client.model.PopularMoviesResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.awaitBody
 
 @Component
 class TmdbClient(
+    private val tmdbWebClient: WebClient, // Injeta o WebClient que configuramos
     @Value("\${tmdb.api.key}") private val apiKey: String,
     @Value("\${tmdb.api.base-url}") private val baseUrl: String
 ) {
 
     private val restTemplate = RestTemplate()
 
-    fun fetchPopularMovies(): PopularMoviesResponse? {
-        val url = "$baseUrl/movie/popular?api_key=$apiKey"
-        val response = restTemplate.getForObject(url, PopularMoviesResponse::class.java)
+    suspend fun fetchPopularMovies(): PopularMoviesResponse? {
+        val response = tmdbWebClient.get()
+            .uri("/movie/popular?api_key=$apiKey")
+            .retrieve()
+            .awaitBody<PopularMoviesResponse>()
         return response
     }
 
-    fun fetchNowPlayingMovies(): PopularMoviesResponse? {
-        val url = "$baseUrl/movie/now_playing?api_key=$apiKey"
-        val response = restTemplate.getForObject(url, PopularMoviesResponse::class.java)
+    suspend fun fetchNowPlayingMovies(): PopularMoviesResponse? {
+        val response = tmdbWebClient.get()
+            .uri("/movie/now_playing?api_key=$apiKey")
+            .retrieve()
+            .awaitBody<PopularMoviesResponse>()
         return response
     }
 
-    fun fetchTopRatedMovies(): PopularMoviesResponse? {
-        val url = "$baseUrl/movie/top_rated?api_key=$apiKey"
-        val response = restTemplate.getForObject(url, PopularMoviesResponse::class.java)
+    suspend fun fetchTopRatedMovies(): PopularMoviesResponse? {
+        val response = tmdbWebClient.get()
+            .uri("/movie/top_rated?api_key=$apiKey")
+            .retrieve()
+            .awaitBody<PopularMoviesResponse>()
         return response
     }
 
-    fun fetchMoviesDetails(movieId: String): DetailResponse? {
-        val url = "$baseUrl/movie/${movieId}?api_key=$apiKey"
-        val response = restTemplate.getForObject(url, DetailResponse::class.java)
+    suspend fun fetchMoviesDetails(movieId: String): DetailResponse? {
+        val response = tmdbWebClient.get()
+            .uri("$baseUrl/movie/${movieId}?api_key=$apiKey")
+            .retrieve()
+            .awaitBody<DetailResponse>()
         return response
     }
 }

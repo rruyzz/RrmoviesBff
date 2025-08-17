@@ -25,6 +25,9 @@ dependencies {
 
 	// Esta é importante para o Spring "entender" Kotlin
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0-RC")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.9.0-RC")
 
 	// A linha abaixo foi removida por ser redundante
 	// implementation ("org.springframework:spring-web:6.1.9")
