@@ -12,7 +12,7 @@ class MovieService {
     private val apiKey = "e591023d8d396231d3045ea6341a6fd2"
     private val baseUrl = "https://api.themoviedb.org/3/"
 
-    fun getPopularMovies( ): List<MovieDto> {
+    fun getPopularMovies(): List<MovieDto> {
         // NOTA: Esta é uma forma simplificada. O ideal é modelar a resposta completa
         // da API externa em suas próprias classes DTO.
         val response = restTemplate.getForObject(
@@ -27,8 +27,8 @@ class MovieService {
             MovieDto(
                 id = (movieMap["id"] as Number).toLong(),
                 title = movieMap["title"] as String,
-                overview = movieMap["overview"] as String,
-                posterPath = movieMap["poster_path"] as? String
+                backdropPath = "https://image.tmdb.org/t/p/w500" + (movieMap["backdrop_path"] as String),
+                posterPath = "https://image.tmdb.org/t/p/w500" + movieMap["poster_path"] as? String
             )
         }
     }

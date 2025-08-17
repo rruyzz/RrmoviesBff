@@ -8,11 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/movies") // Prefixo para todos os endpoints neste controller
+@RequestMapping("/movies-bff") // Prefixo para todos os endpoints neste controller
 class MovieController(private val movieService: MovieService) {
 
     @GetMapping("/popular")
     fun getPopularMovies(): List<MovieDto> {
+        return movieService.getPopularMovies()
+    }
+
+
+    @GetMapping("/now-playing")
+    fun getNowPlayingMovies(): List<MovieDto> {
+        return movieService.getPopularMovies()
+    }
+
+
+    @GetMapping("/top-rated")
+    fun getTopRatedMovies(): List<MovieDto> {
         return movieService.getPopularMovies()
     }
 }
