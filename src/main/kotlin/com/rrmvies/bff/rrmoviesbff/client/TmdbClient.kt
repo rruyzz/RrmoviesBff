@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.WebClientResponseException
 import org.springframework.web.reactive.function.client.awaitBody
 
 @Component
@@ -42,10 +43,14 @@ class TmdbClient(
     }
 
     suspend fun fetchMoviesDetails(movieId: String): DetailResponse? {
-        val response = tmdbWebClient.get()
-            .uri("$baseUrl/movie/${movieId}?api_key=$apiKey")
-            .retrieve()
-            .awaitBody<DetailResponse>()
-        return response
+        return try {
+            tmdbWebClient.get()
+                .uri("/movie/$movieId?api_key=$apiKey")
+                .retrieve()
+                .awaitBody<DetailResponse>()
+        } catch (ex: WebClientResponseException.NotFound) {
+            // A API do TMDb retornou 404, então o filme não existe.
+            null
+        }
     }
 }

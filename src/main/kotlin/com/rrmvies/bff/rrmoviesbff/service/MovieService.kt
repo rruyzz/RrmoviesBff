@@ -3,6 +3,7 @@ package com.rrmvies.bff.rrmoviesbff.service
 import com.rrmvies.bff.rrmoviesbff.client.TmdbClient
 import com.rrmvies.bff.rrmoviesbff.client.model.DetailResponse
 import com.rrmvies.bff.rrmoviesbff.client.model.PopularMoviesResponse
+import com.rrmvies.bff.rrmoviesbff.controller.exception.ResourceNotFoundException
 import com.rrmvies.bff.rrmoviesbff.dto.MovieDetailDto
 import com.rrmvies.bff.rrmoviesbff.dto.MovieDto
 import org.springframework.beans.factory.annotation.Value
@@ -31,6 +32,9 @@ class MovieService(
 
     suspend fun findMoviesDetails(movieId: String) : MovieDetailDto? {
         val externalMovie = tmdbClient.fetchMoviesDetails(movieId)
+        if (externalMovie == null) {
+            throw ResourceNotFoundException("Filme com ID '$movieId' não encontrado.")
+        }
         return externalMovie?.mapToDetailDto()
     }
 
