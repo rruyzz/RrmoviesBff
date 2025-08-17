@@ -14,18 +14,18 @@ class MovieController(private val movieService: MovieService) {
 
     @GetMapping("/popular")
     fun getPopularMovies(): ResponseEntity<List<MovieDto>> {
-        return ResponseEntity.ok(movieService.getPopularMovies())
+        return ResponseEntity.ok(movieService.findPopularMovies())
     }
 
 
     @GetMapping("/now-playing")
     fun getNowPlayingMovies(): ResponseEntity<List<MovieDto>> {
-        return ResponseEntity.ok(movieService.getPopularMovies())
+        return ResponseEntity.ok(movieService.findNowPlayingMovies())
     }
 
 
     @GetMapping("/top-rated")
     fun getTopRatedMovies(): ResponseEntity<List<MovieDto>> {
-        return ResponseEntity.ok(movieService.getPopularMovies())
+        return ResponseEntity.ok(movieService.findTopRatedMovies())
     }
 }
