@@ -3,6 +3,7 @@ package com.rrmvies.bff.rrmoviesbff.domain.services.movie
 import com.rrmvies.bff.rrmoviesbff.client.tmdb.TmdbClient
 import com.rrmvies.bff.rrmoviesbff.client.model.DetailResponse
 import com.rrmvies.bff.rrmoviesbff.client.model.PopularMoviesResponse
+import com.rrmvies.bff.rrmoviesbff.domain.core.exceptions.ResourceNotFoundException
 import com.rrmvies.bff.rrmoviesbff.domain.core.extensions.ok
 import com.rrmvies.bff.rrmoviesbff.domain.repository.TmdbRepository
 import com.rrmvies.bff.rrmoviesbff.domain.repository.model.DetailModel
@@ -20,17 +21,20 @@ class MovieService(
 
     suspend fun findPopularMovies(): ResponseEntity<List<MovieDto>> {
         val externalMovies = tmdbClient.findPopularMovies()
-        return externalMovies?.toDto().ok()
+            ?: throw ResourceNotFoundException("Filmes populares não encontrado.")
+        return externalMovies.toDto().ok()
     }
 
     suspend fun findNowPlayingMovies(): ResponseEntity<List<MovieDto>> {
         val externalMovies = tmdbClient.findNowPlayingMovies()
-        return externalMovies?.toDto().ok()
+            ?: throw ResourceNotFoundException("Filmes em cartaz não encontrado.")
+        return externalMovies.toDto().ok()
     }
 
     suspend fun findTopRatedMovies(): ResponseEntity<List<MovieDto>> {
         val externalMovies = tmdbClient.findTopRatedMovies()
-        return externalMovies?.toDto().ok()
+            ?: throw ResourceNotFoundException("Filmes melhores avaliados não encontrado.")
+        return externalMovies.toDto().ok()
     }
 
     private fun List<MovieModel>.toDto(): List<MovieDto> {

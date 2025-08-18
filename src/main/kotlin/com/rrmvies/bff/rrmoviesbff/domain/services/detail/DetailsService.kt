@@ -1,5 +1,6 @@
 package com.rrmvies.bff.rrmoviesbff.domain.services.detail
 
+import com.rrmvies.bff.rrmoviesbff.domain.core.exceptions.ResourceNotFoundException
 import com.rrmvies.bff.rrmoviesbff.domain.repository.TmdbRepository
 import com.rrmvies.bff.rrmoviesbff.domain.repository.model.DetailModel
 import com.rrmvies.bff.rrmoviesbff.presentation.features.detail.DetailDto
@@ -12,7 +13,8 @@ class DetailsService(
 
     suspend fun findMoviesDetails(movieId: String): DetailDto? {
         val externalMovie = tmdbClient.findDetailMovie(movieId)
-        return externalMovie?.toDto()
+            ?: throw ResourceNotFoundException("Filme com ID '$movieId' não encontrado.")
+        return externalMovie.toDto()
     }
 
     private fun DetailModel.toDto(): DetailDto {
