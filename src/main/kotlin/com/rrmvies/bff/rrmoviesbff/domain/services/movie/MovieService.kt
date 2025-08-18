@@ -20,17 +20,17 @@ class MovieService(
 
     suspend fun findPopularMovies(): ResponseEntity<List<MovieDto>> {
         val externalMovies = tmdbClient.findPopularMovies()
-        return externalMovies.toDto().ok()
+        return externalMovies?.toDto().ok()
     }
 
     suspend fun findNowPlayingMovies(): ResponseEntity<List<MovieDto>> {
         val externalMovies = tmdbClient.findNowPlayingMovies()
-        return externalMovies.toDto().ok()
+        return externalMovies?.toDto().ok()
     }
 
     suspend fun findTopRatedMovies(): ResponseEntity<List<MovieDto>> {
         val externalMovies = tmdbClient.findTopRatedMovies()
-        return externalMovies.toDto().ok()
+        return externalMovies?.toDto().ok()
     }
 
     private fun List<MovieModel>.toDto(): List<MovieDto> {
