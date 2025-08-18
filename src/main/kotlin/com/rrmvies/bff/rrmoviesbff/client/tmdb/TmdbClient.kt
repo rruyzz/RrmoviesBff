@@ -1,4 +1,4 @@
-package com.rrmvies.bff.rrmoviesbff.client
+package com.rrmvies.bff.rrmoviesbff.client.tmdb
 
 import com.rrmvies.bff.rrmoviesbff.client.model.DetailResponse
 import com.rrmvies.bff.rrmoviesbff.client.model.PopularMoviesResponse

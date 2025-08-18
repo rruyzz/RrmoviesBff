@@ -1,4 +1,4 @@
-package com.rrmvies.bff.rrmoviesbff.dto
+package com.rrmvies.bff.rrmoviesbff.presentation.features.movie
 
 data class MovieDto(
     val id: Long,

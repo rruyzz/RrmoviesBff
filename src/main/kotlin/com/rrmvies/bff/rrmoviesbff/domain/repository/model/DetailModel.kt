@@ -1,6 +1,6 @@
-package com.rrmvies.bff.rrmoviesbff.dto
+package com.rrmvies.bff.rrmoviesbff.domain.repository.model
 
-data class MovieDetailDto(
+data class DetailModel(
     val isSaved: Boolean,
     val title: String,
     val backgroundPoster: String,

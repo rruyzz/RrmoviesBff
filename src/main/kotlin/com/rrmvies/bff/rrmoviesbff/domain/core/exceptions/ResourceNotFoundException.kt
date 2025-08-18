@@ -1,4 +1,4 @@
-package com.rrmvies.bff.rrmoviesbff.controller.exception
+package com.rrmvies.bff.rrmoviesbff.domain.core.exceptions
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus

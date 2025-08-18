@@ -1,7 +1,6 @@
-package com.rrmvies.bff.rrmoviesbff.controller.advicer
+package com.rrmvies.bff.rrmoviesbff.domain.core.exceptions
 
-import com.rrmvies.bff.rrmoviesbff.controller.exception.ResourceNotFoundException
-import com.rrmvies.bff.rrmoviesbff.dto.ErrorResponseDto
+import com.rrmvies.bff.rrmoviesbff.presentation.core.ErrorResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
