@@ -18,13 +18,13 @@ class TmdbRepositoryImpl(
     }
 
     override suspend fun findNowPlayingMovies(): List<MovieModel> {
-        val nowPlayingMovies = client.fetchPopularMovies()
+        val nowPlayingMovies = client.fetchNowPlayingMovies()
             ?: throw ResourceNotFoundException("Filmes em cartaz não encontrado.")
         return mapper.map(nowPlayingMovies)
     }
 
     override suspend fun findTopRatedMovies(): List<MovieModel> {
-        val topRatedMovies = client.fetchPopularMovies()
+        val topRatedMovies = client.fetchTopRatedMovies()
             ?: throw ResourceNotFoundException("Filmes melhores avaliados não encontrado.")
         return mapper.map(topRatedMovies)
     }
