@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -25,16 +26,24 @@ class ApplicationConfig() {
         userRepository: UserRepository
     ): UserDetailsService {
         return UserDetailsService { email -> // O 'username' aqui é o nosso e-mail
+            println("--- Buscando usuário pelo e-mail: $email ---") // Adicione este log
+
             userRepository.findByEmail(email)
                 .map { user ->
+                    println("--- Usuário encontrado: ${user.email} ---") // Adicione este log
+
                     // Converte nossa entidade User para o User do Spring Security
                     org.springframework.security.core.userdetails.User
                         .withUsername(user.email)
                         .password(user.passwordHash)
-                        .authorities(emptyList()) // Podemos adicionar roles/permissões aqui no futuro
+                        .authorities(listOf(SimpleGrantedAuthority("ROLE_USER")))
+//                        .authorities(emptyList()) // Podemos adicionar roles/permissões aqui no futuro
                         .build()
                 }
-                .orElseThrow { UsernameNotFoundException("Usuário não encontrado com o e-mail: $email") }
+                .orElseThrow {
+                    println("--- ERRO: Usuário não encontrado com o e-mail: $email ---") // Adicione este log
+
+                    UsernameNotFoundException("Usuário não encontrado com o e-mail: $email") }
         }
     }
 
