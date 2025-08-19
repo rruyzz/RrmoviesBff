@@ -2,8 +2,8 @@ package com.rrmvies.bff.rrmoviesbff.client.tmdb
 
 import com.rrmvies.bff.rrmoviesbff.client.model.DetailResponse
 import com.rrmvies.bff.rrmoviesbff.client.model.PopularMoviesResponse
-import com.rrmvies.bff.rrmoviesbff.domain.repository.model.DetailModel
-import com.rrmvies.bff.rrmoviesbff.domain.repository.model.MovieModel
+import com.rrmvies.bff.rrmoviesbff.domain.repository.tmdb.DetailModel
+import com.rrmvies.bff.rrmoviesbff.domain.repository.tmdb.MovieModel
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 

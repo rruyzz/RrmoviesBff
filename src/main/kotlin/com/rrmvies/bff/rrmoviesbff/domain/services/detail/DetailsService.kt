@@ -1,8 +1,8 @@
 package com.rrmvies.bff.rrmoviesbff.domain.services.detail
 
 import com.rrmvies.bff.rrmoviesbff.domain.core.exceptions.ResourceNotFoundException
-import com.rrmvies.bff.rrmoviesbff.domain.repository.TmdbRepository
-import com.rrmvies.bff.rrmoviesbff.domain.repository.model.DetailModel
+import com.rrmvies.bff.rrmoviesbff.domain.repository.tmdb.TmdbRepository
+import com.rrmvies.bff.rrmoviesbff.domain.repository.tmdb.DetailModel
 import com.rrmvies.bff.rrmoviesbff.presentation.features.detail.DetailDto
 import org.springframework.stereotype.Service
 
