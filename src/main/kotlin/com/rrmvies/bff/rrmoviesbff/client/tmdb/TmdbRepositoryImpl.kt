@@ -1,7 +1,7 @@
 package com.rrmvies.bff.rrmoviesbff.client.tmdb
 
 import com.rrmvies.bff.rrmoviesbff.domain.core.exceptions.ResourceNotFoundException
-import com.rrmvies.bff.rrmoviesbff.domain.repository.TmdbRepository
+import com.rrmvies.bff.rrmoviesbff.domain.repository.tmdb.TmdbRepository
 import com.rrmvies.bff.rrmoviesbff.domain.repository.model.DetailModel
 import com.rrmvies.bff.rrmoviesbff.domain.repository.model.MovieModel
 import org.springframework.stereotype.Repository

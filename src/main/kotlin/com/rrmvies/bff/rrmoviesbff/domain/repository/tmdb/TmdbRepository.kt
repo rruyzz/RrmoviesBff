@@ -1,8 +1,7 @@
-package com.rrmvies.bff.rrmoviesbff.domain.repository
+package com.rrmvies.bff.rrmoviesbff.domain.repository.tmdb
 
 import com.rrmvies.bff.rrmoviesbff.domain.repository.model.DetailModel
 import com.rrmvies.bff.rrmoviesbff.domain.repository.model.MovieModel
-import com.rrmvies.bff.rrmoviesbff.presentation.features.movie.MovieDto
 
 interface TmdbRepository {
     suspend fun findPopularMovies(): List<MovieModel>?
