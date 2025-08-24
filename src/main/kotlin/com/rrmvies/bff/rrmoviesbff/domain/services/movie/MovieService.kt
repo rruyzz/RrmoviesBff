@@ -1,16 +1,10 @@
 package com.rrmvies.bff.rrmoviesbff.domain.services.movie
 
-import com.rrmvies.bff.rrmoviesbff.client.tmdb.TmdbClient
-import com.rrmvies.bff.rrmoviesbff.client.model.DetailResponse
-import com.rrmvies.bff.rrmoviesbff.client.model.PopularMoviesResponse
 import com.rrmvies.bff.rrmoviesbff.domain.core.exceptions.ResourceNotFoundException
 import com.rrmvies.bff.rrmoviesbff.domain.core.extensions.ok
-import com.rrmvies.bff.rrmoviesbff.domain.repository.TmdbRepository
-import com.rrmvies.bff.rrmoviesbff.domain.repository.model.DetailModel
-import com.rrmvies.bff.rrmoviesbff.domain.repository.model.MovieModel
-import com.rrmvies.bff.rrmoviesbff.presentation.features.detail.DetailDto
+import com.rrmvies.bff.rrmoviesbff.domain.repository.tmdb.TmdbRepository
+import com.rrmvies.bff.rrmoviesbff.domain.repository.tmdb.model.MovieModel
 import com.rrmvies.bff.rrmoviesbff.presentation.features.movie.MovieDto
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 

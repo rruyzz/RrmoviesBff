@@ -1,4 +1,4 @@
-package com.rrmvies.bff.rrmoviesbff.domain.repository.model
+package com.rrmvies.bff.rrmoviesbff.domain.repository.tmdb.model
 
 data class MovieModel(
     val id: Long,

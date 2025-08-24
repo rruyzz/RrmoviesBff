@@ -29,6 +29,21 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0-RC")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.9.0-RC")
 
+	// Spring Security
+	implementation("org.springframework.boot:spring-boot-starter-security")
+
+	// JPA e Banco de Dados
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly("com.h2database:h2")
+
+	// JWT para autenticação stateless
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+	// Validação
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+
 	// A linha abaixo foi removida por ser redundante
 	// implementation ("org.springframework:spring-web:6.1.9")
 
