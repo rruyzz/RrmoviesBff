@@ -4,52 +4,50 @@ import com.rrmvies.bff.rrmoviesbff.client.model.DetailResponse
 import com.rrmvies.bff.rrmoviesbff.client.model.PopularMoviesResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import org.springframework.web.client.RestTemplate
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import org.springframework.web.reactive.function.client.awaitBody
 
 @Component
 class TmdbClient(
-    private val tmdbWebClient: WebClient, // Injeta o WebClient que configuramos
-    @Value("\${tmdb.api.key}") private val apiKey: String,
-    @Value("\${tmdb.api.base-url}") private val baseUrl: String
+    private val tmdbWebClient: WebClient,
+    @Value("\${tmdb.api.key}") private val apiKey: String
 ) {
 
-    private val restTemplate = RestTemplate()
+    suspend fun fetchPopularMovies(): PopularMoviesResponse? =
+        getMovies("/movie/popular")
 
-    suspend fun fetchPopularMovies(): PopularMoviesResponse? {
-        val response = tmdbWebClient.get()
-            .uri("/movie/popular?api_key=$apiKey")
-            .retrieve()
-            .awaitBody<PopularMoviesResponse>()
-        return response
-    }
+    suspend fun fetchNowPlayingMovies(): PopularMoviesResponse? =
+        getMovies("/movie/now_playing")
 
-    suspend fun fetchNowPlayingMovies(): PopularMoviesResponse? {
-        val response = tmdbWebClient.get()
-            .uri("/movie/now_playing?api_key=$apiKey")
-            .retrieve()
-            .awaitBody<PopularMoviesResponse>()
-        return response
-    }
+    suspend fun fetchTopRatedMovies(): PopularMoviesResponse? =
+        getMovies("/movie/top_rated")
 
-    suspend fun fetchTopRatedMovies(): PopularMoviesResponse? {
-        val response = tmdbWebClient.get()
-            .uri("/movie/top_rated?api_key=$apiKey")
-            .retrieve()
-            .awaitBody<PopularMoviesResponse>()
-        return response
-    }
-
-    suspend fun fetchMoviesDetails(movieId: String): DetailResponse? {
-        return try {
+    suspend fun fetchMoviesDetails(movieId: String): DetailResponse? =
+        safeRequest {
             tmdbWebClient.get()
                 .uri("/movie/$movieId?api_key=$apiKey")
                 .retrieve()
-                .awaitBody<DetailResponse>()
+                .awaitBody()
+        }
+
+    // 🔹 Função genérica para requisições de listas de filmes
+    private suspend fun getMovies(endpoint: String): PopularMoviesResponse? =
+        safeRequest {
+            tmdbWebClient.get()
+                .uri("$endpoint?api_key=$apiKey")
+                .retrieve()
+                .awaitBody()
+        }
+
+    // 🔹 Wrapper para capturar erros de forma centralizada
+    private suspend fun <T> safeRequest(block: suspend () -> T): T? {
+        return try {
+            block()
         } catch (ex: WebClientResponseException.NotFound) {
-            // A API do TMDb retornou 404, então o filme não existe.
+            null // filme ou endpoint não encontrado
+        } catch (ex: WebClientResponseException) {
+            println("Erro na API TMDb: ${ex.statusCode} - ${ex.responseBodyAsString}")
             null
         }
     }
